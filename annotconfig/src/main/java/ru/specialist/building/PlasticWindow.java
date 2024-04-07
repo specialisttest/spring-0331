@@ -1,0 +1,15 @@
+package ru.specialist.building;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component
+@Scope("prototype")
+public class PlasticWindow implements Window{
+
+	@Override
+	public void open() {
+		System.out.println("Open plastic window");
+	}
+
+}
