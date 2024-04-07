@@ -6,7 +6,16 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ru.specialist.building.House;
+import ru.specialist.graph.Scene;
 import ru.specialist.world.Country;
+
+/*
+ * Лабраторная 
+ * Создать конфигурацию графических объектов используя только
+ * аннотации
+ * 
+ * 
+ */
 
 @ComponentScan("ru.specialist.building")
 @PropertySource("house.properties")
@@ -32,6 +41,13 @@ public class App {
 						city.getName(), city.getState(), city.getPopulation());
 			
 						
+			
+		}
+		
+		try(AnnotationConfigApplicationContext gContext =
+				new AnnotationConfigApplicationContext(GraphConfig.class))
+		{
+			gContext.getBean(Scene.class).draw();
 			
 		}
 		
