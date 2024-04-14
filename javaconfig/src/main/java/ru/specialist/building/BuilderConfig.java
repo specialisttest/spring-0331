@@ -67,6 +67,7 @@ public class BuilderConfig {
 	@Autowired
 	private Environment env;
 	
+	//@Bean(destroyMethod = "shutdown")
 	@Bean
 	@Lazy
 	public House house(@Value("${house.height}") int houseHeight) {

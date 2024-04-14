@@ -1,11 +1,16 @@
 package ru.specialist.building;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 
-public class House {
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
+public class House implements Closeable {
 	
 	private int height;
 	private Window window;
@@ -73,7 +78,7 @@ public class House {
 	
 	
 	
-
+	@PostConstruct
 	public void onCreate() {
 		System.out.println("Creating house");
 	}
@@ -86,10 +91,19 @@ public class House {
 		this.doors = doors;
 	}
 
+	@PreDestroy
 	public void onDestroy() {
 		System.out.println("Destroying house");
+	}
+
+	@Override
+	public void close()  {
+		System.out.println("House close()");
 	}	
 	
+	public void shutdown()  {
+		System.out.println("House shutdown()");
+	}	
 	
 	
 	

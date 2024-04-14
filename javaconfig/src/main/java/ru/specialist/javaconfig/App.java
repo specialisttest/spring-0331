@@ -4,6 +4,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import ru.specialist.building.BuilderConfig;
 import ru.specialist.building.House;
+import ru.specialist.graph.GraphConfig;
+import ru.specialist.graph.Scene;
 import ru.specialist.world.Country;
 import ru.specialist.world.WorldConfig;
 
@@ -21,7 +23,8 @@ public class App {
 		try (AnnotationConfigApplicationContext context = 
 				new AnnotationConfigApplicationContext(
 						BuilderConfig.class,
-						WorldConfig.class
+						WorldConfig.class,
+						GraphConfig.class
 						))
 		{
 			
@@ -38,8 +41,9 @@ public class App {
 						city.getName(), city.getState(), city.getPopulation());			
 			
 						
+			context.getBean(Scene.class).draw();
 			
-		}
+		} // context.close()
 	}
 
 }
