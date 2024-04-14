@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
@@ -13,6 +14,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 /*
  * 1. Реализовать метод findByTitle (используя оператор WHERE title LIKE ? )
@@ -21,6 +23,7 @@ import org.springframework.jdbc.support.KeyHolder;
  * 
  */
 
+@Repository("courseDao")
 public class CourseDaoJdbcImpl implements CourseDao {
 	
 	private static final String SQL_SELECT_COURSE = 
@@ -47,6 +50,7 @@ public class CourseDaoJdbcImpl implements CourseDao {
 	public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
 	}
+	@Autowired
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
@@ -54,6 +58,7 @@ public class CourseDaoJdbcImpl implements CourseDao {
 	public RowMapper<Course> getCourseRowMapper() {
 		return courseRowMapper;
 	}
+	@Autowired
 	public void setCourseRowMapper(RowMapper<Course>courseRowMapper) {
 		this.courseRowMapper = courseRowMapper;
 	}

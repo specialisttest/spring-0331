@@ -23,7 +23,10 @@ public class App {
 			System.out.println(s);
 			*/
 			
-			for(Course course : dao.findAll())
+			//for(Course course : dao.findAll())
+			//	System.out.println(course);
+			
+			for(Course course : dao.findByTitle("web"))
 				System.out.println(course);
 			//Course c = dao.findById(3);
 			//System.out.println(c);
