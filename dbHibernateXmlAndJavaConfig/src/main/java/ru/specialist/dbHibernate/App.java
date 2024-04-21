@@ -1,9 +1,11 @@
 package ru.specialist.dbHibernate;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ru.specialist.dao.Course;
 import ru.specialist.dao.CourseDao;
+import ru.specialist.dao.DaoConfig;
 
 /*
  * Домашнее задание
@@ -18,8 +20,10 @@ public class App {
 
 	public static void main(String[] args) {
 		
-		try (ClassPathXmlApplicationContext context = 
-				new ClassPathXmlApplicationContext("appContext.xml"))
+		//ClassPathXmlApplicationContext context = 
+				//		new ClassPathXmlApplicationContext("applicationContext.xml");
+    	AnnotationConfigApplicationContext context = 
+    			new AnnotationConfigApplicationContext (DaoConfig.class);
 		{
 			CourseDao dao = context.getBean(CourseDao.class);
 			
