@@ -1,19 +1,12 @@
-package ru.specialist.dao;
-
-
-import java.util.ArrayList;
-import java.util.List;
+package ru.specialist.config;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.concurrent.ConcurrentMapCache;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
-import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -23,18 +16,30 @@ import org.springframework.dao.annotation.PersistenceExceptionTranslationPostPro
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
-@PropertySource("jdbc.properties")
+@ComponentScan(basePackages = {"ru.specialist.controllers", 
+		"ru.specialist.models", "ru.specialist.dao"})
+@EnableWebMvc
+@PropertySource("/WEB-INF/dao/jdbc.properties")
+@PropertySource("/WEB-INF/dao/hibernate.properties")
 @EnableTransactionManagement
 @EnableCaching
-@ComponentScan("ru.specialist.service")
-@EnableJpaRepositories(basePackages = "ru.specialist.dao"
-		/*, repositoryImplementationPostfix = "Impl"*/)
-public class DaoConfig {
+@EnableJpaRepositories(basePackages = "ru.specialist.dao")
+public class ApplicationConfig {
+	
+	
+	@Bean("restTemplate")
+	public RestTemplate getRestTemplate()
+	{
+		return new RestTemplate();
+	}
+	
 	@Autowired
 	private Environment env;
 	
@@ -72,16 +77,9 @@ public class DaoConfig {
 	
 	@Bean
 	public CacheManager cacheManager() {
-		/*SimpleCacheManager c = new SimpleCacheManager();
-		List<Cache> caches = new ArrayList<Cache>();
-		caches.add(new ConcurrentMapCache("courses"));
-		c.setCaches(caches);
-		return c;*/
-		
+
 		return new ConcurrentMapCacheManager("courses");
 		
 	}
-	
-	
 
 }

@@ -23,6 +23,7 @@ import ru.specialist.dao.DaoConfig;
  * 
  */
 import ru.specialist.dao.TeacherDao;
+import ru.specialist.service.ReportService;
 
 public class App {
 
@@ -32,6 +33,8 @@ public class App {
     			new AnnotationConfigApplicationContext (DaoConfig.class);
 		{
 			CourseDao dao = context.getBean(CourseDao.class);
+			ReportService report = context.getBean("reports", 
+					ReportService.class);
 			
 			dao.findById(1);
 			Optional<Course> oc = dao.findById(1);
@@ -44,24 +47,32 @@ public class App {
 			int n = dao.changeCourseLength(32, 34);
 			System.out.println(n);
 			
-			List<Course> courses = dao.findAll();
+			//List<Course> courses = dao.findAll();
 			
-			//for(Course course : dao.findAll())
-			//	System.out.println(course);
+			for(Course course : dao.findAll())
+				System.out.println(course);
+			
+			System.out.printf("Average course length: %.2f\n",
+					report.getAverageCourseLength());
+			
+			System.out.printf("Median course length: %.2f\n",
+					report.getMedianaCourseLength());
+			
+			
 			//for(Course course : dao.findByLength(40))
 			//		System.out.println(course);
 			//for(Course course : dao.findShortCourses(35))
 			//	System.out.println(course);
 			
-			for(Course course : dao.findByTitle("web"))
-				System.out.println(course);
+			//for(Course course : dao.findByTitle("web"))
+			//	System.out.println(course);
 
-			var tr = context.getBean(TeacherDao.class);
+			/*var tr = context.getBean(TeacherDao.class);
 			
 			for(var t : tr.findByName("Иван"))
 				System.out.printf("%d %s %s %s\n", t.getId(), t.getName(),
 						t.getAddress(), t.getPhone());
-			
+			*/
 		}
 	}
 
